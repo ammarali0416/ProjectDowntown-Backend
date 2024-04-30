@@ -1,3 +1,6 @@
+# PDT backend key
+PDT_App_Backend.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

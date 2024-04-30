@@ -1,3 +1,5 @@
 fastapi==0.110.0
 uvicorn[standard]
 python-dotenv
+oauth2client
+gspread
