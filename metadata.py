@@ -8,9 +8,11 @@ Future version will support additional functionality.
 
 ## Current Features
 * Add a record to the data collection Google Sheet
+* Add a record to the item request Google Sheet
 
 ## Future Features
 * Add image and audio data to the Google Sheet/Drive
+* Mark item requests as fulfilled or other edits
 * Data validation (whaterver that means lol)
 
 """
