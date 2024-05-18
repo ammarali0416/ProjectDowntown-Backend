@@ -4,17 +4,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv, find_dotenv
 
 from Schemas import LocationCount
-from google_sheets import append_row
-import metadata
+from google_sheets.crud import append_row
+
+from metadata import title, description, summary, version, contact
 
 load_dotenv(find_dotenv())
 
 app = FastAPI(
-    title=metadata.title,
-    description=metadata.description,
-    summary=metadata.summary,
-    version=metadata.version,
-    contact=metadata.contact
+    title=title,
+    description=description,
+    summary=summary,
+    version=version,
+    contact=contact
 )
 
 origins = [
