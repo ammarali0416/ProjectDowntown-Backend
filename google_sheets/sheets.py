@@ -11,7 +11,8 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name("PDT_App_Backend.
 file = gspread.authorize(credentials) # authenticate the JSON key with gspread
 
 # Initialize the Google Sheets
-data_collection = file.open("Data Collection") #open sheet
-
+data_collection = file.open("Data Collection") 
+requests_from_friends = file.open("PDT Requests from Friends")
 
 data_collection_DATA = data_collection.worksheet('DATA') 
+requests_from_friends_REQUESTS = requests_from_friends.worksheet('Requests')
