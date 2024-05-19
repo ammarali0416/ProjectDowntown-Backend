@@ -1,15 +1,34 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import (
+    FastAPI, 
+    Depends, 
+    HTTPException, 
+    status,
+    UploadFile,
+    File)
+
+from typing import Annotated
+
 from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv, find_dotenv
 
-from Schemas import LocationCount
-from Schemas import ItemRequestWrite
+from Schemas import (
+    LocationCount,
+    ItemRequestWrite,
+    ValidLocation,
+    ImageUploadSuccess)
 
 from google_sheets.crud import add_count_data
 from google_sheets.crud import add_item_request
 
-from metadata import title, description, summary, version, contact
+from google_drive.crud import image_upload
+
+from metadata import (
+    title, 
+    description, 
+    summary, 
+    version, 
+    contact)
 
 load_dotenv(find_dotenv())
 
@@ -55,4 +74,15 @@ async def add_count(count: LocationCount) -> LocationCount:
           tags=["Item Requests"])
 async def add_request(request: ItemRequestWrite) -> ItemRequestWrite:
     response = await add_item_request(request)
+    return response
+
+@app.post("/AddImage/{location}",
+          status_code=status.HTTP_202_ACCEPTED,
+          summary="Add an image to the Google Drive",
+          response_model=ImageUploadSuccess,
+          response_description="Image added",
+          description="Adds an image to the Google Drive in PDT/PD App Data/Image Data/{location}. https://drive.google.com/drive/u/1/folders/1QJVjszvNSgnvbvd8lWK64upFcFDdwITB. Usually takes a few seconds to update in Drive",
+          tags=["Data Collection"])
+async def add_image(location: Annotated[ValidLocation, "One of the PDT distribution locations"], image: Annotated[UploadFile, File(description="An image of the specified location")]):
+    response = await image_upload(location, image)
     return response
